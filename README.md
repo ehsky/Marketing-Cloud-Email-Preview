@@ -1,5 +1,9 @@
 # Marketing Cloud Email Preview
 
+This app solves the preview issue when you have a lot of dynamic content blocks, ampScript etc in an email and you want to view the actual sent message to the end user.
+
+![Preview of component](/.assets/noContent.png)
+
 _This requires Marketing Cloud Connect._
 
 ## Deploy
@@ -71,10 +75,12 @@ _If your unsure of the Identity Type, then pick ***Named Credential***_
 Continuing from the previews step.
 
 - Click on the Named Credential tab.
-- Then click on **_New_**, and complete the fomr with the following options:
--
-
-- Let's go back into Salesforce. Open **_Setup_** again, search for **_Named Credential_**. Then click on **_New_**
+- Then click on **_New_**, and complete the form with the following options:
+- Label: **_SFMC Email Preview_**
+- Name: **_SFMC_Email_Preview_**
+- URL: ***https://xxxxxxxxxx.rest.marketingcloudapis.com***
+- External Credential: **_Your recently created External Credential with same name_**
+- Click **_save_**
 
 ![Auth. Provider Setup Example](/.assets/namedCredential.png)
 
