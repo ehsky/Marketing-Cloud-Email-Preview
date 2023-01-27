@@ -1,18 +1,84 @@
-# Salesforce DX Project: Next Steps
+# Marketing Cloud Email Preview
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+_This requires Marketing Cloud Connect._
 
-## How Do You Plan to Deploy Your Changes?
+## Deploy
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+You can use the quick installer here to deploy the code directly to your org. \
+[![Deploy to salesforce](https://githubsfdeploy.herokuapp.com/resources/img/deploy.png)](https://githubsfdeploy.herokuapp.com/?owner=ehsky&repo=Marketing-Cloud-Email-Preview)
 
-## Configure Your Salesforce DX Project
+## Setup
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+### Create Package In Marketing Cloud
 
-## Read All About It
+- Ensure you're in the **_Business Unit_** that you'd like the component to display emails from.
+- Inside Marketing Cloud, open **_Setup_**, expand Appsa and choose **_Installed Packages_**. Then click on **_New_**
+- Give the package a name, such as **_SFMC Email Preview_**, then click **_Save_**
+- Click on **_Add Component_**m select **_API Integration_**, and click on **_Next_**, then choose **_Web App_**, click **_Next_**, and finally in the permissions panel, you must cik the following options:
+  - Offline Access
+  - Email: Read
+- At the top, set the **_URI_** field to any URL you can think of - we'll change it later. E.g. google.com, and then click **_Save_**
+- Click on the tab **_Access_**, then **_License All Users_** or pick a specific integration user. If you pick a specific user this would be used in a later step.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+### Configure Auth Provider
+
+- From Setup, in the Quick Find box, enter Auth, and then select **_Auth. Providers_**.
+- Click New.
+- For the provider type, select OpenID Connect.
+  - Provider name: **_SFMC Email Preview_**
+  - URL suffix: **_SFMC_Email_Preview_**
+  - Consumer Key: **_Paste the Client Id from the Marketing Cloud Package we just created._**
+  - Consumer Secret: **_Paste the Client Id from the Marketing Cloud Package we just created._**
+  - Authorize Endpoint URL: **_Paste the Authentication Base URI from the Marketing Cloud package we just created, and add v2/authorize at the end_** (e.g. https://xxxxxxxxxx.auth.marketingcloudapis.com/v2/authorize)
+  - Token Endpoint URL: **_Paste the Authentication Base URI from the Marketing Cloud package we just created, and add v2/token at the end_** (e.g. https://xxxxxxxxxx.auth.marketingcloudapis.com/v2/token)
+- Then click **_Save_**.
+- Now, at the bottom of there page you'll find a **_Callback URL_**, copy it.
+- Go back into the **_Marketing Cloud Package_** configuration page, click on **_Edit_** inside the API integration box, and replace the dummy URI you had entered at the top (google.com) with the one you just copied. Click **_Save_**.
+
+![Auth. Provider Setup Example](/.assets/authProviderSetup.png)
+
+### Configure External Credential
+
+Start by creating a new permission set or find an existing where you want to grant access to this api.
+
+- From Setup, in the Quick Find box, enter Credential, and then select **_Named Credential_**.
+- ***https://xxxxxxxxxx.rest.marketingcloudapis.com***
+
+![Auth. Provider Setup Example](/.assets/externalCredential.png)
+
+#### Authenticate External Credential
+
+We are now going to use the newly created or chosen permission set.
+
+- In the section **_Permission Set Mappings_**, click on **\*New**.
+- Find the permission set of your choosing.
+- Pick one of the following Identity Types:
+  - Per User Principal: If you requiere that only users of this component need to have a user in marketing cloud.
+  - Named Credential: All users of the component are pre-authenticated as on the Salesforce org-level.
+- Click **_Save_**
+
+_If your unsure of the Identity Type, then pick ***Named Credential***_
+
+- If you chose **_Named Credential_** then click on the arrow under the _Actions_ column.
+- Then click **_Authorize_**.
+- Continue logging in to marketing with your user, or use an integration user mentioned in the package setup section previously.
+- Confirm that the _Authentication Status_ is **_Configured_**
+
+![Auth. Provider Setup Example](/.assets/authenticate.png)
+
+### Configure Named Credential
+
+Continuing from the previews step.
+
+- Click on the Named Credential tab.
+- Then click on **_New_**, and complete the fomr with the following options:
+-
+
+- Let's go back into Salesforce. Open **_Setup_** again, search for **_Named Credential_**. Then click on **_New_**
+
+![Auth. Provider Setup Example](/.assets/namedCredential.png)
+
+### Add Lightning Web Component to Record Pages
+
+The final step is to add the component "Marketing Cloud Email Preview" to the record page layout of the IndividualEmailResult object.
+In the component properties you input the Developer name of the **Named Credential**, in this guide it is **_SFMC_Email_Preview_**
