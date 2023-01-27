@@ -3,7 +3,7 @@
  *                      Controller is used to make a API request to the Marketing Cloud API.
  * @author            : erlend.hansen@stretch.no | https://trailblazer.me/id/ehansen7
  * @group             : MarketingCloud
- * @last modified on  : 01-26-2023
+ * @last modified on  : 01-27-2023
  * @last modified by  : erlend.hansen@stretch.no | https://trailblazer.me/id/ehansen7
  **/
 public with sharing class MCEmailPreview {
@@ -24,14 +24,12 @@ public with sharing class MCEmailPreview {
     try {
       String path = '/guide/v1/emails/' + emailId + '/preview?kind=html';
       String resBody = doPost(path, namedCredentialName);
-      System.debug('resBody: ' + resBody);
       MCEmailPreviewWrapper emailPreviewResponse = MCEmailPreviewWrapper.parse(
         resBody
       );
 
       return emailPreviewResponse.message.views[0].content;
     } catch (System.Exception e) {
-      System.debug(e);
       throw new MCEmailPreviewException(
         'Unable to get email preview. ' + e.getMessage()
       );

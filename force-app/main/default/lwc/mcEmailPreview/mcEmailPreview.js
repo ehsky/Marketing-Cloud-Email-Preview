@@ -29,15 +29,14 @@ export default class McEmailPreview extends LightningElement {
     }
   }
 
-  @wire(getRecord, { recordId: "$recordId", fields: [EMAIL_ID] })
+  @wire(getRecord, { recordId: "$_recordId", fields: [EMAIL_ID] })
   wiredEmailResult({ error, data }) {
     if (error) {
-      console.log(error);
       this.error = error;
     } else if (data) {
-      const emailId = getFieldValue(this.email.data, EMAIL_ID);
-      console.log("emailId: " + emailId);
-      this.getEmailContent();
+      this.error = undefined;
+      const emailId = getFieldValue(data, EMAIL_ID);
+      this.getEmailContent(emailId);
     }
   }
 
@@ -58,11 +57,9 @@ export default class McEmailPreview extends LightningElement {
       namedCredentialName: this.namedCredentialName
     })
       .then((result) => {
-        // this.template.querySelector(".emailPreview").appendChild(result);
         this.template.querySelector(".emailPreview").innerHTML = result;
       })
       .catch((error) => {
-        console.debug("error: " + error);
         this.error = error;
       });
   }
