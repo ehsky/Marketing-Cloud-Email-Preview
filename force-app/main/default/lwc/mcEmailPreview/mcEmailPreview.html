@@ -1,0 +1,20 @@
+<!--
+  @description       : Email Preview Component for Marketing Cloud
+  @author            : erlend.hansen@stretch.no | https://trailblazer.me/id/ehansen7
+  @group             : MarketingCloud
+  @last modified on  : 01-27-2023
+  @last modified by  : erlend.hansen@stretch.no | https://trailblazer.me/id/ehansen7
+-->
+<template>
+  <lightning-card title="Email Preview" icon-name="standard:email">
+    <div class="previewContainer">
+      <div class="emailPreview" lwc:dom="manual"></div>
+      <div class="errorPanel" if:true={error}>
+        <c-error-panel
+          errors={error}
+          friendly-message={friendlyMessage}
+        ></c-error-panel>
+      </div>
+    </div>
+  </lightning-card>
+</template>

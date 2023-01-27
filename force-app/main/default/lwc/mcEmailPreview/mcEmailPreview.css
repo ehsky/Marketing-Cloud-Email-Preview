@@ -1,0 +1,18 @@
+:host {
+  --sds-c-card-color-background: var(--lwc-colorBackground);
+  --slds-c-card-body-spacing-block-end: 0;
+}
+
+/* Make sure no links are clickable */
+.emailPreview {
+  pointer-events: none;
+}
+
+.previewContainer {
+  background-color: var(--lwc-colorBackgroundAlt);
+}
+
+.errorPanel {
+  padding-top: var(--lwc-varSpacingMedium);
+  padding-bottom: var(--lwc-varSpacingMedium);
+}
