@@ -45,8 +45,13 @@ You can use the quick installer here to deploy the code directly to your org. \
 
 Start by creating a new permission set or find an existing where you want to grant access to this api.
 
-- From Setup, in the Quick Find box, enter Credential, and then select **_Named Credential_**.
-- ***https://xxxxxxxxxx.rest.marketingcloudapis.com***
+- From Setup, in the Quick Find box, enter Credential, and then select **_Named Credential_** in the menu on the left.
+- Continue by clicking on the tab ***External Credentials***, and click on ***New***.
+- In the form fill out the following details:
+  - Label: SFMC Email Preview
+  - Name: SFMC_Email_Preview
+  - Authentication Protocol: OAuth 2.0
+  - Authentication provider: SFMC Email Preview
 
 ![Auth. Provider Setup Example](/.assets/externalCredential.png)
 
