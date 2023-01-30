@@ -32,7 +32,7 @@ You can use the quick installer here to deploy the code directly to your org. \
   - Provider name: **_SFMC Email Preview_**
   - URL suffix: **_SFMC_Email_Preview_**
   - Consumer Key: **_Paste the Client Id from the Marketing Cloud Package we just created._**
-  - Consumer Secret: **_Paste the Client Id from the Marketing Cloud Package we just created._**
+  - Consumer Secret: **_Paste the Client Secret from the Marketing Cloud Package we just created._**
   - Authorize Endpoint URL: **_Paste the Authentication Base URI from the Marketing Cloud package we just created, and add v2/authorize at the end_** (e.g. https://xxxxxxxxxx.auth.marketingcloudapis.com/v2/authorize)
   - Token Endpoint URL: **_Paste the Authentication Base URI from the Marketing Cloud package we just created, and add v2/token at the end_** (e.g. https://xxxxxxxxxx.auth.marketingcloudapis.com/v2/token)
 - Then click **_Save_**.
