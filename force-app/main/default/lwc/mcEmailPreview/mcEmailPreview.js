@@ -9,9 +9,21 @@ import getEmailPreview from "@salesforce/apex/MCEmailPreview.getEmailPreviewHTML
  */
 export default class McEmailPreview extends LightningElement {
   _recordId;
+  _objectApiName;
+  tempRecordId;
+
   @api namedCredentialName;
   friendlyMessage;
   error;
+
+  @api
+  get objectApiName() {
+    return this._objectApiName;
+  }
+  set objectApiName(value) {
+    this._objectApiName = value;
+    this.validateRecordIdAndObjectName();
+  }
 
   @api
   get recordId() {
@@ -19,13 +31,16 @@ export default class McEmailPreview extends LightningElement {
   }
   // Validate that the recordId is of object type IndividualEmailResult
   set recordId(value) {
-    if (value.substring(0, 3) === "a2h") {
-      this.error = undefined;
-      this._recordId = value;
-    } else {
-      this._recordId = undefined;
+    this.tempRecordId = value;
+    this.validateRecordIdAndObjectName();
+  }
+  validateRecordIdAndObjectName() {
+    if (this._objectApiName && this.tempRecordId) {
+      this._recordId = this.tempRecordId;
+    } else if (this._objectApiName !== "et4ae5__IndividualEmailResult__c") {
       this.error = true;
-      this.friendlyMessage = "This is not a valid email record";
+      this.friendlyMessage =
+        "This component can only be used with IndividualEmailResult";
     }
   }
 
